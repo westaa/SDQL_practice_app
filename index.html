@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<!DOCTYPE html>
+<html lang="en" ng-app ="SDQLApp">
+<head>
+  <meta charset="UTF-8">
+  <title>SDQL AngularJS Application</title>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js">
+  </script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.js">
+  </script>
+  <script type = "text/javascript" src="app.js"></script>
+  <script type = "text/javascript" src="javascripts/controllers.js"></script>
+  <script type = "text/javascript" src="javascripts/directives.js"></script>
+  <script type = "text/javascript" src="javascripts/filters.js"></script>
+  <script type = "text/javascript" src="javascripts/services.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body ng-controller = "SDQLController">
+  <h1>SDQL Matchup Analysis</h1>
+  <p><text>SDQL Analysis is always presented from the standpoint of a specific team.</text></p>
+  <label for="homeTeamSelector">Select Team to Analyze</label>
+  <select id="homeTeamSelector" ng-model="view.selectedTeam">
+    <option value="Saints" ng-selected="true">Saints</option>
+    <option value="Panthers">Panthers</option>
+    <option value="Falcons">Falcons</option>
+    <option value="Buccaneers">Buccaneers</option>
+    <option value="Browns">Browns</option>
+    <option value="Ravens">Ravens</option>
+    <option value="Bengals">Bengals</option>
+    <option value="Steelers">Steelers</option>
+    <option value="Bears">Bears</option>
+    <option value="Vikings">Vikings</option>
+    <option value="Packers">Packers</option>
+    <option value="Lions">Lions</option>
+    <option value="Patriots">Patriots</option>
+    <option value="Jets">Jets</option>
+    <option value="Dolphins">Dolphins</option>
+    <option value="Bills">Bills</option>
+    <option value="49ers">49ers</option>
+    <option value="Seahawks">Seahawks</option>
+    <option value="Cardinals">Cardinals</option>
+    <option value="Rams">Rams</option>
+    <option value="Chiefs">Chiefs</option>
+    <option value="Broncos">Broncos</option>
+    <option value="Raiders">Raiders</option>
+    <option value="Chargers">Chargers</option>
+    <option value="Colts">Colts</option>
+    <option value="Texans">Texans</option>
+    <option value="Titans">Titans</option>
+    <option value="Jaguars">Jaguars</option>
+    <option value="Cowboys">Cowboys</option>
+    <option value="Giants">Giants</option>
+    <option value="Eagles">Eagles</option>
+    <option value="Redskins">Redskins</option>
+  </select>
+
+  <label for="awayTeamSelector">Select Opposing Team in Current Matchup</label>
+  <select id="awayTeamSelector" ng-model="view.opposingTeam">
+    <option value="Panthers">Panthers</option>
+    <option value="Falcons">Falcons</option>
+    <option value="Buccaneers">Buccaneers</option>
+    <option value="Browns">Browns</option>
+    <option value="Ravens">Ravens</option>
+    <option value="Bengals">Bengals</option>
+    <option value="Steelers">Steelers</option>
+    <option value="Bears">Bears</option>
+    <option value="Vikings">Vikings</option>
+    <option value="Packers">Packers</option>
+    <option value="Lions">Lions</option>
+    <option value="Patriots">Patriots</option>
+    <option value="Jets">Jets</option>
+    <option value="Dolphins">Dolphins</option>
+    <option value="Bills">Bills</option>
+    <option value="49ers">49ers</option>
+    <option value="Seahawks">Seahawks</option>
+    <option value="Cardinals">Cardinals</option>
+    <option value="Rams">Rams</option>
+    <option value="Chiefs">Chiefs</option>
+    <option value="Broncos">Broncos</option>
+    <option value="Raiders">Raiders</option>
+    <option value="Chargers">Chargers</option>
+    <option value="Colts">Colts</option>
+    <option value="Texans">Texans</option>
+    <option value="Titans">Titans</option>
+    <option value="Jaguars">Jaguars</option>
+    <option value="Cowboys">Cowboys</option>
+    <option value="Giants">Giants</option>
+    <option value="Eagles">Eagles</option>
+    <option value="Redskins">Redskins</option>
+
+  </select>
+  <br>
+  <br>
+  <input type="button" value="Analyze Matchup" ng-click="view.getData(view.selectedTeam, view.opposingTeam)">
+  <text><h2>{{view.selectedTeam}} performance against the {{view.opposingTeam}} over Last Five Years</h2></text>
+  <div id = "dataDiv">
+  <div>
+    <h4>Site</h4>
+    <h3 ng-repeat = "site in view.site track by $index">{{site}}</h3>
+  </div>
+  <div>
+    <h4>Date</h4>
+    <h3 ng-repeat = "date in view.date track by $index">{{date | dateFilter}}</h3>
+  </div>
+  <div>
+    <h4>{{view.selectedTeam}}</h4>
+    <h3 ng-repeat = "points in view.selectedTeamPoints track by $index">{{points}}</h3>
+  </div>
+  <div>
+    <h4>{{view.opposingTeam}}</h4>
+    <h3 ng-repeat = "points in view.opposingTeamPoints track by $index">{{points}}</h3>
+  </div>
+  <div>
+    <h4>Result</h4>
+    <h3 ng-repeat = "result in view.result track by $index" ng-class="{'success': result > 0, 'failure': result < 0}">{{result | resultFilter}}</h3>
+  </div>
+  <div>
+    <h4>Point Spread</h4>
+    <h3 ng-repeat = "spread in view.pointSpread track by $index">{{spread}}</h3>
+  </div>
+  <div>
+    <h4>Total</h4>
+    <h3 ng-repeat = "total in view.total track by $index">{{total}}</h3>
+  </div>
+  <div>
+    <h4>ATS Performance</h4>
+    <h3 ng-repeat = "margin in view.ATSPerformance track by $index" ng-class="{'success': margin > 0, 'failure': margin < 0}">{{margin | resultFilter}}</h3>
+  </div>
+  <div>
+    <h4>Total Performance</h4>
+    <h3 ng-repeat = "margin in view.totalPerformance track by $index" ng-class="{'success': margin[0] == 'O', 'failure': margin[0] == 'U'}">{{margin}}</h3>
+  </div>
+</div>
+
+<div>
+  <h2>Additional Trends Pertinent to {{view.selectedTeam}} Matchup</h2>
+</div>
+
+</body>
+</html>

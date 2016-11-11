@@ -1,0 +1,18 @@
+#homeTeamSelector option{
+  width: 20%;
+  height: 5%;
+  color: black;
+}
+
+#dataDiv {
+  display:flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.success {
+  background: green;
+}
+.failure {
+  background: red;
+}
